@@ -7,9 +7,14 @@ contract Arrays {
   }
 
   //getting the length of an array
-  function returnFirstElement(uint256[] calldata myArray) public pure returns (uint256) {
+  function lengthOfArray(uint256[] calldata myArray) public pure returns (uint256) {
     uint256 len = myArray.length;
     return len;
+  }
+
+  function returnFirstElement(uint256[] calldata myArray) public pure returns (uint256) {
+    uint256 firstElement = myArray[0];
+    return firstElement;
   }
 
   // Looping through an array
