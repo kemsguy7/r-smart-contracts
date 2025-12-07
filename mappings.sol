@@ -36,3 +36,13 @@ contract ERC20Token {
     balances[reciever] += amount; //credit the receiver's balance
   }
 }
+
+//NESTED MAPPINGS
+
+contract NestedMaps {
+  mapping(uint256 => mapping(uint256 => uint256)) public nestedMap;
+
+  function setNestedMap(uint256 key1, uint256 key2, uint256 finalValue) public {
+    nestedMap[key1][key2] = finalValue;
+  }
+}
