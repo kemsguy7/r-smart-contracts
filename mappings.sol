@@ -1,3 +1,6 @@
+//SPDX-Licence-Identifier : MIT 
+
+pragma ^0.8.20; 
 // mappings, Hashmaps, associative array, maps.
 
 contract ExampleContract {
@@ -44,5 +47,10 @@ contract NestedMaps {
 
   function setNestedMap(uint256 key1, uint256 key2, uint256 finalValue) public {
     nestedMap[key1][key2] = finalValue;
+  } 
+
+  function getNestedMap(uint256 key1, uint256 key2) public view returns (uint256) { 
+    return nestedMap[key1][key2];
   }
 }
+
