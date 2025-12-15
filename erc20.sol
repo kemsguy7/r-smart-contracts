@@ -14,9 +14,10 @@ contract ERC20 {
   // this enables an owner to give allowance to multiple addresses
   mapping(address => mapping(address => uint256)) public allowance;
 
-  constructor(string memory _name, string memory _symbol) {
+  constructor(string memory _name, string memory _symbol, uint8 decimals) {
     name = _name;
     symbol = _symbol;
+    decimals = 18;
 
     owner = msg.sender;
   }
@@ -29,7 +30,7 @@ contract ERC20 {
 
   function transfer(address to, uint256 amount) public {
     require(balanceOf[msg.sender] >= amount, 'Insufficient balance');
-    require(to != address(0), 'Cannot send to address(0)');
+    require(to != address(0), 'Cannot send to address(0)'); //sanity address 0 chceck
     balanceOf[msg.sender] -= amount;
     balanceOf[to] += amount;
   }
@@ -37,5 +38,18 @@ contract ERC20 {
   // spender is the address of the account that is being granted the allowance by msg.sender
   function approve(address spender, uint256 amount) public {
     allowance[msg.sender][spender] = amount;
+  }
+
+  function transerFrom(address from, address to, uint256 amount) public {
+    require(balanceOf[from] >= amount, 'Insufficient balance');
+
+    if (msg.sender != from) {
+      require(allowance[from][msg.sender] >= amount, 'not enough allowance');
+
+      allowance[from][msg.sender] -= amount;
+    }
+
+    balanceOf[from] -= amount;
+    balanceOf[to] += amount;
   }
 }
