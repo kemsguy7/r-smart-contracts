@@ -29,12 +29,7 @@ contract ERC20 {
   }
 
   function transfer(address to, uint256 amount) public returns (bool) {
-    require(balanceOf[msg.sender] >= amount, 'Insufficient balance');
-    require(to != address(0), 'Cannot send to address(0)'); //sanity address 0 chceck
-    balanceOf[msg.sender] -= amount;
-    balanceOf[to] += amount;
-
-    return true;
+    return helperTransfer(msg.sender, to, amount);
   }
 
   // spender is the address of the account that is being granted the allowance by msg.sender
@@ -52,6 +47,13 @@ contract ERC20 {
       allowance[from][msg.sender] -= amount;
     }
 
+    return helperTransfer(from, to, amount);
+  }
+
+  function helperTransfer(address from, address to, uint256 amount) internal returns (bool) {
+    require(balanceOf[from] >= amount, 'Insufficient balance');
+
+    require(to != address(0), 'cannot send to address(0)');
     balanceOf[from] -= amount;
     balanceOf[to] += amount;
 
